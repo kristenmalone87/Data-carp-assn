@@ -42,3 +42,15 @@ table_to_export<-merge(extinct,extant,by="continent")
 
 #export to csv
 write.csv(table_to_export,file="continent_mass_differences.csv",sep=",",row.names=FALSE)
+
+#now organize data for plots - exchange "AF" for other contintents, and exchange extant for extinct
+
+logmass_extant<-"SELECT continent, log_mas
+                    FROM MOMv3 
+                    WHERE status ='extant'AND continent='AF';"
+logmass_extant<-dbGetQuery(conn,logmass_extant) 
+
+par(mfrow=c(2,2))
+
+hist(logmass_extant$log_mas,xlab="log mass",ylab="frequency") #not working...could be because there are -999 vals
+
